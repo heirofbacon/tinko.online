@@ -1,0 +1,42 @@
+<div class="w-full p-4 md:p-8 pb-12 animate-[fadeIn_0.3s_ease-out]">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-8 md:p-10 rounded-3xl mb-10 shadow-xl">
+            <h2 class="text-3xl font-bold text-white mb-4">OBS Setup Guide</h2>
+            <p class="text-zinc-400 leading-relaxed text-lg">Getting Tinko running on your stream takes less than two minutes. Follow these instructions to add the interactive layer to your broadcast.</p>
+        </div>
+        
+        <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-zinc-800 before:to-transparent">
+            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-zinc-950 bg-zinc-800 text-emerald-500 font-bold shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
+                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg">
+                    <h3 class="font-bold text-white text-xl mb-2 text-emerald-400">Get Your Overlay URL</h3>
+                    <p class="text-zinc-400 text-sm">Log into the Tinko Dashboard to retrieve your unique overlay URL. It will look something like this:</p>
+                    <div class="bg-black p-3 rounded-lg text-xs font-mono text-zinc-500 border border-zinc-800 mt-3 break-all">
+                        https://play.tinko.online/overlay?key=your_secret_key
+                    </div>
+                </div>
+            </div>
+            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-zinc-950 bg-zinc-800 text-emerald-500 font-bold shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
+                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg">
+                    <h3 class="font-bold text-white text-xl mb-2">Add Browser Source</h3>
+                    <p class="text-zinc-400 text-sm">Open OBS Studio or Streamlabs. In your Sources panel, click the <strong>+</strong> button and select <strong>Browser</strong>. Name it "Tinko Game".</p>
+                </div>
+            </div>
+            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-zinc-950 bg-zinc-800 text-emerald-500 font-bold shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
+                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg">
+                    <h3 class="font-bold text-white text-xl mb-2">Configure Dimensions</h3>
+                    <p class="text-zinc-400 text-sm">Paste your URL into the URL field. Important: Set the <strong>Width to 1920</strong> and <strong>Height to 1080</strong> to ensure the physics engine aligns properly with your screen.</p>
+                </div>
+            </div>
+            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-zinc-950 bg-zinc-800 text-emerald-500 font-bold shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">4</div>
+                <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg border-l-4 border-l-emerald-500">
+                    <h3 class="font-bold text-white text-xl mb-2">Enable Audio (Crucial)</h3>
+                    <p class="text-zinc-400 text-sm">Scroll down in the Browser Source settings and check the box that says <strong>"Control audio via OBS"</strong>. This ensures the TikTok-style win alerts and sound effects play through your stream audio correctly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

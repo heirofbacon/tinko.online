@@ -1,0 +1,242 @@
+<div class="w-full p-4 md:p-8 pb-12 flex-1 flex flex-col h-full animate-[fadeIn_0.3s_ease-out]">
+    <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col">
+        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h2 class="text-4xl font-black text-white tracking-tight">Game <span class="text-purple-500">Simulator</span></h2>
+                <p class="text-zinc-400 mt-2 text-lg">Test out the exact Matter.js Plinko physics engine running on your stream.</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="window.simDropBall('#10b981')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl transition-all font-bold shadow-lg"><i class="fas fa-droplet"></i> Drop Green</button>
+                <button onclick="window.simDropBall('#ef4444')" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-xl transition-all font-bold shadow-lg"><i class="fas fa-droplet"></i> Drop Red</button>
+                <button onclick="window.simDropBall('random')" class="bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 hover:opacity-80 text-white px-4 py-2 rounded-xl transition-all font-bold shadow-lg"><i class="fas fa-star"></i> Random</button>
+            </div>
+        </div>
+        <div class="flex-1 bg-black border-2 border-zinc-800 rounded-3xl relative overflow-hidden flex items-center justify-center min-h-[500px]" id="sim-container">
+            <!-- Matter.js Canvas dynamically injects here -->
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for the floating score text */
+    @keyframes floatUp { 
+        0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 
+        20% { transform: translate(-50%, -20px) scale(1.2); opacity: 1; } 
+        100% { transform: translate(-50%, -80px) scale(1); opacity: 0; } 
+    }
+</style>
+
+<!-- Load Matter.js exactly as used in overlay.html -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+<script>
+    (function() {
+        // Wait a tiny bit for the external script injection to finish loading
+        setTimeout(() => {
+            if (typeof Matter === 'undefined') {
+                console.error('Matter.js failed to load.');
+                return;
+            }
+
+            const container = document.getElementById('sim-container');
+            if (!container) return;
+
+            // Clear previous instances if module was reloaded
+            container.innerHTML = '';
+            if (window.simEngine) {
+                Matter.Engine.clear(window.simEngine);
+                if (window.simRender) {
+                    Matter.Render.stop(window.simRender);
+                    if (window.simRender.canvas) window.simRender.canvas.remove();
+                }
+                if (window.simRunner) Matter.Runner.stop(window.simRunner);
+            }
+
+            const { Engine, Render, Runner, Bodies, Composite, Events, Body } = Matter;
+            
+            const engine = Engine.create(); 
+            const world = engine.world;
+            window.simEngine = engine;
+
+            const width = 900; 
+            const height = 900; 
+            
+            const render = Render.create({ 
+                element: container, 
+                engine: engine, 
+                options: { width: width, height: height, wireframes: false, background: 'transparent' }
+            });
+            window.simRender = render;
+
+            const runner = Runner.create();
+            window.simRunner = runner;
+            Runner.run(runner, engine);
+            Render.run(render); 
+
+            // --- EXACT REPLICA OF OVERLAY.HTML VARIABLES ---
+            engine.world.gravity.y = 0.5; // Default fair gravity
+            let currentAirFriction = 0.04; 
+            let currentSpread = 35;
+            let pegs = []; 
+            let balls = [];
+
+            const rows = 15; 
+            const startCols = 3; 
+            const spacingX = 46; 
+            const spacingY = 38; 
+            const startY = 100; 
+            let bottomRowWidth = 0;
+
+            // Generate Pegs
+            for (let row = 0; row < rows; row++) {
+                let pegsInThisRow = startCols + row; 
+                let rowWidth = (pegsInThisRow - 1) * spacingX; 
+                if (row === rows - 1) bottomRowWidth = rowWidth; 
+                let startX = (width / 2) - (rowWidth / 2);
+                for (let col = 0; col < pegsInThisRow; col++) {
+                    pegs.push(Bodies.circle(startX + (col * spacingX), startY + (row * spacingY), 4, { 
+                        isStatic: true, label: 'peg', restitution: 0.65, render: { fillStyle: '#9dc3f7' } 
+                    }));
+                }
+            }
+            Composite.add(world, pegs);
+
+            // Generate Walls
+            const wallMargin = (width - bottomRowWidth) / 2 - 15; 
+            Composite.add(world, [ 
+                Bodies.rectangle(wallMargin, height/2, 20, height, { isStatic: true, render: { visible: false } }), 
+                Bodies.rectangle(width - wallMargin, height/2, 20, height, { isStatic: true, render: { visible: false } }) 
+            ]);
+
+            // Generate Bins & Sensors
+            const bottomRowCols = startCols + rows - 1; 
+            const binStartX = (width / 2) - (bottomRowWidth / 2);
+            const binValues = [50, 20, 10, 5, 2, 1, 0, -1, -2, -1, 0, 1, 2, 5, 10, 20, 50];
+            const binColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#0ea5e9', '#94a3b8', '#f87171', '#b91c1c', '#f87171', '#94a3b8', '#0ea5e9', '#14b8a6', '#22c55e', '#eab308', '#f97316', '#ef4444'];
+            
+            for (let i = 0; i < bottomRowCols; i++) { 
+                const x = binStartX + (i * spacingX); 
+                const dividerX = x - (spacingX / 2);
+                Composite.add(world, Bodies.rectangle(dividerX, height - 60, 4, 120, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+                Composite.add(world, Bodies.circle(dividerX, height - 120, 2, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+                Composite.add(world, Bodies.rectangle(x, height - 30, spacingX - 6, 40, { 
+                    isStatic: true, isSensor: true, label: 'sensor_' + i, 
+                    plugin: { payout: binValues[i], color: binColors[i] }, 
+                    render: { visible: false } 
+                }));
+            }
+            
+            const lastDividerX = binStartX + ((bottomRowCols - 1) * spacingX) + (spacingX / 2);
+            Composite.add(world, Bodies.rectangle(lastDividerX, height - 60, 4, 120, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+            Composite.add(world, Bodies.circle(lastDividerX, height - 120, 2, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+
+            // Expose Drop Function globally
+            window.simDropBall = function(colorArg) {
+                const randomX = (width / 2) + (Math.random() * currentSpread - (currentSpread/2));
+                
+                let ballColor = colorArg;
+                if (ballColor === 'random') { 
+                    const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7', '#ec4899']; 
+                    ballColor = colors[Math.floor(Math.random() * colors.length)]; 
+                }
+                
+                const ball = Bodies.circle(randomX, -20, 11, { 
+                    restitution: 0.65, friction: 0.001, frictionAir: currentAirFriction, density: 0.05, 
+                    collisionFilter: { group: -1 }, label: 'ball', 
+                    render: { visible: false, fillStyle: ballColor }, 
+                    plugin: { hasScored: false } 
+                });
+
+                Body.setVelocity(ball, { x: Math.random() * 1 - 0.5, y: 0 }); 
+                balls.push(ball); 
+                Composite.add(world, ball);
+            };
+
+            // Cleanup fallen balls
+            Events.on(engine, 'beforeUpdate', () => { 
+                for (let i = balls.length - 1; i >= 0; i--) { 
+                    if (balls[i].position.y > height + 50) { 
+                        Composite.remove(world, balls[i]); 
+                        balls.splice(i, 1); 
+                    } 
+                } 
+            });
+
+            // Replicate the exact visual overlay from overlay.html
+            Events.on(render, 'afterRender', () => {
+                const ctx = render.context;
+                
+                // 3D Ball Rendering
+                balls.forEach(ball => {
+                    const grad = ctx.createRadialGradient(ball.position.x - 3.3, ball.position.y - 3.3, 1.1, ball.position.x, ball.position.y, 11);
+                    grad.addColorStop(0, 'rgba(255,255,255,0.9)'); 
+                    grad.addColorStop(1, ball.render.fillStyle); 
+                    ctx.fillStyle = grad; 
+                    ctx.beginPath(); 
+                    ctx.arc(ball.position.x, ball.position.y, 11, 0, 2*Math.PI); 
+                    ctx.fill();
+                });
+
+                // Bin Multiplier Overlays
+                ctx.textAlign = "center"; 
+                ctx.textBaseline = "middle"; 
+                ctx.font = "bold 13px system-ui";
+                for (let i = 0; i < bottomRowCols; i++) {
+                    const x = binStartX + (i * spacingX); 
+                    const y = height - 20;
+                    ctx.fillStyle = binColors[i]; 
+                    ctx.globalAlpha = 0.2;
+                    ctx.beginPath(); 
+                    if (ctx.roundRect) {
+                        ctx.roundRect(x - (spacingX/2) + 3, y - 12, spacingX - 6, 24, 4); 
+                    } else {
+                        ctx.rect(x - (spacingX/2) + 3, y - 12, spacingX - 6, 24); 
+                    }
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0; 
+                    let displayTxt = binValues[i] > 0 ? '+' + binValues[i] : binValues[i];
+                    ctx.fillText(displayTxt, x, y);
+                }
+            });
+
+            // Scoring Logic
+            Events.on(engine, 'collisionStart', function(event) {
+                event.pairs.forEach(pair => {
+                    let ball = null; let sensor = null;
+                    if (pair.bodyA.label === 'ball' && pair.bodyB.label.startsWith('sensor')) { ball = pair.bodyA; sensor = pair.bodyB; } 
+                    else if (pair.bodyB.label === 'ball' && pair.bodyA.label.startsWith('sensor')) { ball = pair.bodyB; sensor = pair.bodyA; }
+                    
+                    if (ball && sensor && !ball.plugin.hasScored) {
+                        ball.plugin.hasScored = true; 
+                        
+                        // Floating Score Text
+                        const el = document.createElement('div');
+                        el.style.position = 'absolute';
+                        el.style.left = `calc(50% + ${ball.position.x - (width/2)}px)`;
+                        el.style.top = `calc(50% + ${(height/2) - 60}px)`;
+                        el.style.color = sensor.plugin.color;
+                        el.style.fontWeight = '900';
+                        el.style.fontSize = '1.5rem';
+                        el.style.textShadow = '0 0 10px rgba(0,0,0,0.8)';
+                        el.style.pointerEvents = 'none';
+                        el.style.zIndex = '50';
+                        el.style.transform = 'translate(-50%, 0)';
+                        el.style.animation = 'floatUp 1.5s ease-out forwards';
+                        el.innerText = sensor.plugin.payout > 0 ? '+' + sensor.plugin.payout : sensor.plugin.payout;
+                        
+                        container.appendChild(el);
+                        setTimeout(() => el.remove(), 1500);
+                    }
+                });
+            });
+
+            // Make the generated canvas fluidly adapt to our rounded container
+            const canvasEl = render.canvas;
+            canvasEl.style.width = '100%';
+            canvasEl.style.height = '100%';
+            canvasEl.style.objectFit = 'contain';
+            canvasEl.style.filter = 'drop-shadow(0px 8px 10px rgba(0,0,0,0.9))';
+
+        }, 300); // 300ms delay to ensure the CDN script has been fetched and parsed
+    })();
+</script>

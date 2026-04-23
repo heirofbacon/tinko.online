@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-zinc-950 text-zinc-300">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tinko | The Interactive Stream Game</title>
+    <meta name="title" content="Tinko | The Interactive Stream Game">
+    <meta name="description" content="Free, highly customizable, interactive stream game for Twitch, YouTube, and Kick streamers. Engage your chat with Tinko.">
+    <meta name="keywords" content="Tinko, stream game, interactive stream, Twitch bot, Kick bot, YouTube stream game, stream tools, modular stream tools, chat interaction">
+    <meta name="author" content="heirofbacon">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#10b981"> <link rel="canonical" href="https://yourdomain.com/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="Tinko | The Interactive Stream Game">
+    <meta property="og:description" content="Free, highly customizable, interactive stream game for Twitch, YouTube, and Kick streamers. Engage your chat with Tinko.">
+    <meta property="og:site_name" content="Tinko">
+    <meta property="og:image" content="https://yourdomain.com/images/tinko-social-banner.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://yourdomain.com/">
+    <meta name="twitter:title" content="Tinko | The Interactive Stream Game">
+    <meta name="twitter:description" content="Free, highly customizable, interactive stream game for Twitch, YouTube, and Kick streamers. Engage your chat with Tinko.">
+    <meta name="twitter:image" content="https://yourdomain.com/images/tinko-social-banner.png">
+    <meta name="twitter:site" content="@heirofbacon">
+    <meta name="twitter:creator" content="@heirofbacon">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        zinc: { 900: '#18181b', 950: '#09090b' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; overflow: hidden; }
+        ::-webkit-scrollbar { width: 8px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        
+        .nav-link { 
+            display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; 
+            color: #a1a1aa; border-radius: 0.75rem; transition: all 0.2s; 
+            font-weight: 600; cursor: pointer; white-space: nowrap; 
+            border-left: 4px solid transparent;
+        }
+        .nav-link:hover { background-color: #27272a; color: #34d399; }
+        .nav-link.active { background-color: #18181b; color: #10b981; border-left: 4px solid #10b981; }
+        
+        @media (max-width: 767px) {
+            .nav-link { border-bottom: 2px solid transparent; border-radius: 0.5rem; font-size: 0.9rem; border-left: none; }
+            .nav-link.active { border-bottom: 2px solid #10b981; border-left: none; }
+        }
+
+        /* Modular Command Boxes */
+        .cmd-box { 
+            background: #121214; border: 1px solid #27272a; border-radius: 1rem; 
+            padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; 
+        }
+        .cmd-box:hover { border-color: #3f3f46; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); }
+        .cmd-code { font-family: monospace; font-size: 1.15rem; font-weight: 800; color: #10b981; margin-bottom: 0.75rem; display: block; }
+        .cmd-mod-code { color: #ef4444; }
+
+        /* Social Animations */
+        .social-icon { transition: all 0.3s ease; opacity: 0.5; display: inline-block; }
+        .social-icon:hover { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5)); }
+
+        @keyframes tada {
+            0% { transform: scale3d(1, 1, 1); }
+            10%, 20% { transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg); }
+            30%, 50%, 70%, 90% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg); }
+            40%, 60%, 80% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg); }
+            100% { transform: scale3d(1, 1, 1); }
+        }
+        .animate-tada { animation: tada 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        
+    </style>
+</head>
+<body class="flex flex-col h-screen bg-zinc-950 selection:bg-emerald-500/30">
+
+    <header class="md:hidden bg-zinc-950 border-b border-zinc-800 p-4 flex justify-between items-center shrink-0 z-20">
+        <h1 class="text-xl font-black text-white flex items-center gap-2"><i class="fas fa-gamepad text-emerald-500"></i> Tinko Game</h1>
+        <a href="https://linktr.ee/theheirofbacon" target="_blank" class="support-btn-anim text-red-500 text-xl inline-block"><i class="fas fa-heart"></i></a>
+    </header>
+
+    <div class="flex flex-col md:flex-row flex-1 overflow-hidden relative">
+        <nav id="sidebar-nav" class="bg-zinc-950 border-b md:border-b-0 md:border-r border-zinc-800 flex md:flex-col shrink-0 w-full md:w-72 overflow-x-auto md:overflow-y-auto z-10">
+            <div class="p-6 border-b border-zinc-800 shrink-0 hidden md:block">
+                <h1 class="text-3xl font-black text-white tracking-tight flex items-center gap-3"><i class="fas fa-gamepad text-emerald-500 drop-shadow-[0_0_10px_rgba(16,185,129,0.4)]"></i> TINKO</h1>
+                <span class="inline-block mt-2 bg-emerald-900/30 border border-emerald-500/30 px-2 py-1 rounded text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Stream & Tools Portal</span>
+            </div>
+            
+            <div class="flex md:flex-col p-2 md:p-4 gap-2 md:gap-1 flex-1 items-center md:items-stretch">
+                <p class="hidden md:block text-[10px] font-bold text-zinc-500 uppercase tracking-wider mb-2 pl-2 mt-2">Main Menu</p>
+                <a class="nav-link active" data-target="home"><i class="fas fa-house w-6 text-center text-zinc-400"></i> Welcome</a>
+                <a class="nav-link" data-target="commands"><i class="fas fa-terminal w-6 text-center text-emerald-500"></i> Chat Commands</a>
+                
+                <p class="hidden md:block text-[10px] font-bold text-zinc-500 uppercase tracking-wider mt-6 mb-2 pl-2">Get Started</p>
+                <a class="nav-link" data-target="setup"><i class="fas fa-wrench w-6 text-center text-blue-500"></i> Setup Guide</a>
+                <a class="nav-link" data-target="simulation"><i class="fas fa-flask w-6 text-center text-purple-500"></i> Game Simulator</a>
+                
+                <p class="hidden md:block text-[10px] font-bold text-zinc-500 uppercase tracking-wider mt-6 mb-2 pl-2">Community</p>
+                <a class="nav-link" data-target="leaderboard"><i class="fas fa-trophy w-6 text-center text-amber-500"></i> Leaderboards</a>
+                <a class="nav-link" data-target="coming_soon"><i class="fas fa-rocket w-6 text-center text-rose-500"></i> Coming Soon</a>
+            </div>
+            
+            <div class="p-4 border-t border-zinc-800 shrink-0 hidden md:block bg-zinc-950/80 backdrop-blur-md">
+                <a href="https://linktr.ee/theheirofbacon" target="_blank" class="support-btn-anim w-full flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-emerald-500/50 px-4 py-3 rounded-xl text-emerald-500 font-bold text-sm transition-all shadow-lg group">
+                    <i class="fas fa-heart text-red-500"></i> Support the Creator
+                </a>
+                <div class="mt-5 flex justify-center gap-4 items-center">
+                    <a href="https://x.com/heirofbacon" class="social-icon"><img src="./images/twitter.svg" class="w-5 h-5" alt="X"></a>
+                    <a href="https://youtube.com/@heirofbacon" class="social-icon"><img src="./images/youtube.svg" class="w-5 h-5" alt="YouTube"></a>
+                    <a href="https://tiktok.com/@heirofbacon" class="social-icon"><img src="./images/tiktok.svg" class="w-5 h-5" alt="TikTok"></a>
+                    <a href="https://cash.app/$heirofbacon" class="social-icon"><img src="./images/cashapp.svg" class="w-5 h-5" alt="CashApp"></a>
+                    <a href="https://account.venmo.com/u/heirofbacon" class="social-icon"><img src="./images/venmo.svg" class="w-5 h-5" alt="Venmo"></a>
+                    <a href="https://www.paypal.com/paypalme/jdeppth" class="social-icon"><img src="./images/paypal.svg" class="w-5 h-5" alt="PayPal"></a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-1 overflow-y-auto bg-black/40 relative flex flex-col" id="main-scroll-area">
+            <div id="module-container" class="flex-1 w-full min-h-full">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        let currentModule = '';
+
+        function initTadaAnimations() {
+            setInterval(() => {
+                document.querySelectorAll('.support-btn-anim').forEach(btn => {
+                    btn.classList.remove('animate-tada');
+                    void btn.offsetWidth;
+                    btn.classList.add('animate-tada');
+                });
+            }, 8000);
+        }
+
+        function loadModule(target) {
+            if (currentModule === target) return; 
+            currentModule = target;
+
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            const activeLink = document.querySelector(`.nav-link[data-target="${target}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            const container = document.getElementById('module-container');
+            const scrollArea = document.getElementById('main-scroll-area');
+            if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            container.innerHTML = `
+                <div class="flex justify-center items-center h-[50vh] w-full">
+                    <i class="fas fa-circle-notch fa-spin text-5xl text-emerald-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]"></i>
+                </div>
+            `;
+
+            fetch(`./tools/${target}.html`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`Module ${target}.html not found.`);
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+                    const scripts = container.querySelectorAll('script');
+                    scripts.forEach(oldScript => {
+                        const newScript = document.createElement('script');
+                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                        if (oldScript.innerHTML) newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                    });
+                })
+                .catch(error => {
+                    console.error('[Router]', error);
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-[50vh] text-center px-4">
+                            <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-6 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]"></i>
+                            <h2 class="text-3xl font-bold text-white mb-2">Module Not Found</h2>
+                            <p class="text-zinc-500 max-w-md">Failed to load <code>./tools/${target}.html</code>. Make sure the file exists.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTadaAnimations();
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadModule(e.currentTarget.getAttribute('data-target'));
+                });
+            });
+            loadModule('home'); // Load default on boot
+        });
+
+        window.switchTab = function(target) { loadModule(target); };
+    </script>
+</body>
+</html>

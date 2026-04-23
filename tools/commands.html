@@ -1,0 +1,79 @@
+<div class="w-full p-4 md:p-8 pb-12 animate-[fadeIn_0.3s_ease-out]">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-10 border-b border-zinc-800 pb-6">
+            <h2 class="text-4xl font-black text-white tracking-tight">Chat <span class="text-emerald-500">Commands</span></h2>
+            <p class="text-zinc-400 mt-2 text-lg">Everything your viewers and mods need to control the game.</p>
+        </div>
+
+        <div class="mb-16">
+            <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><i class="fas fa-users text-blue-500"></i> Viewer Commands</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div class="cmd-box border-emerald-900/30">
+                    <span class="cmd-code">!drop &lt;amount&gt; [color|emote|@user]</span>
+                    <p class="text-sm text-zinc-400 mb-3">Drops balls onto the pegboard. Optionally specify a color, "me" for your profile pic, or tag someone to drop their avatar.</p>
+                    <div class="bg-black p-3 rounded-lg text-xs font-mono text-zinc-500 border border-zinc-800 space-y-1">
+                        <div>> !drop 5 red</div>
+                        <div>> !drop 2 🥓</div>
+                        <div>> !drop 5 @heirofbacon</div>
+                    </div>
+                </div>
+                <div class="cmd-box">
+                    <span class="cmd-code">!color &lt;hex|color|emote|@user&gt;</span>
+                    <p class="text-sm text-zinc-400 mb-3">Permanently change what your balls look like so you don't have to specify it every time you drop.</p>
+                    <div class="bg-black p-3 rounded-lg text-xs font-mono text-zinc-500 border border-zinc-800 space-y-1">
+                        <div>> !color #ff00ff</div>
+                        <div>> !color 🥓</div>
+                    </div>
+                </div>
+                <div class="cmd-box">
+                    <span class="cmd-code">!balls <span class="text-zinc-600 text-sm font-normal">or</span> !points</span>
+                    <p class="text-sm text-zinc-400">Tinkobot will reply with your current ball inventory. You can also tag someone to check their balance.</p>
+                </div>
+                <div class="cmd-box">
+                    <span class="cmd-code">!leaderboard [@user]</span>
+                    <p class="text-sm text-zinc-400">Shows the top 3 players currently on the server, as well as your personal rank.</p>
+                </div>
+                <div class="cmd-box bg-blue-900/10 border-blue-900/30">
+                    <span class="cmd-code text-blue-400">!duel &lt;@user&gt; &lt;wager&gt;</span>
+                    <p class="text-sm text-zinc-400 mb-3">Challenge another viewer to a 1v1 drop battle. Winner takes the whole pot!</p>
+                    <div class="bg-black p-3 rounded-lg text-xs font-mono text-zinc-500 border border-zinc-800">> !duel @chatuser 50</div>
+                </div>
+                <div class="cmd-box bg-blue-900/10 border-blue-900/30">
+                    <span class="cmd-code text-blue-400">!accept <span class="text-zinc-600 text-sm font-normal">or</span> !deny</span>
+                    <p class="text-sm text-zinc-400">Accept or decline a pending duel challenge from another viewer (you have 60 seconds).</p>
+                </div>
+                <div class="cmd-box bg-amber-900/10 border-amber-900/30">
+                    <span class="cmd-code text-amber-400">!join</span>
+                    <p class="text-sm text-zinc-400">Join an active Battle Royale lobby if a Moderator has opened one. Entry fee varies.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-red-950/20 border border-red-900/50 p-8 rounded-3xl shadow-lg">
+            <h3 class="text-2xl font-bold text-red-500 mb-2 flex items-center gap-3"><i class="fas fa-shield-halved"></i> Moderator & Admin Commands</h3>
+            <p class="text-zinc-400 mb-8">These commands require Mod or Broadcaster privileges on the respective platform.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div class="cmd-box border-red-900/30 bg-black/40">
+                    <span class="cmd-code cmd-mod-code">!battle &lt;entry_cost&gt;</span>
+                    <p class="text-sm text-zinc-400">Opens a Battle Royale lobby for 60 seconds. Viewers type !join to enter. Winner takes all.</p>
+                </div>
+                <div class="cmd-box border-red-900/30 bg-black/40">
+                    <span class="cmd-code cmd-mod-code">!ballsoff <span class="text-zinc-600 text-sm font-normal">or</span> !ballson</span>
+                    <p class="text-sm text-zinc-400">Pauses or resumes the Tinko game globally, hiding it from the overlay.</p>
+                </div>
+                <div class="cmd-box border-red-900/30 bg-black/40">
+                    <span class="cmd-code cmd-mod-code">!addballs &lt;amount&gt; &lt;@user&gt;</span>
+                    <p class="text-sm text-zinc-400">Injects currency into a specific user's account magically.</p>
+                </div>
+                <div class="cmd-box border-red-900/30 bg-black/40">
+                    <span class="cmd-code cmd-mod-code">!removeballs &lt;amount|all&gt; &lt;@user&gt;</span>
+                    <p class="text-sm text-zinc-400">Removes currency. Use "all" to wipe an account to 0.</p>
+                </div>
+                <div class="cmd-box border-red-900/30 bg-black/40">
+                    <span class="cmd-code cmd-mod-code">!dropmax &lt;amount&gt;</span>
+                    <p class="text-sm text-zinc-400">Sets the global limit for how many balls a viewer can drop in a single command to prevent stream lag.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

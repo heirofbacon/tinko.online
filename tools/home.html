@@ -1,0 +1,275 @@
+<div class="w-full p-4 md:p-8 pb-12 animate-[fadeIn_0.3s_ease-out]">
+    <div class="w-full max-w-[1800px] mx-auto space-y-8">
+        
+        <!-- TWO-COLUMN HERO SECTION -->
+        <div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-black border border-zinc-800 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col xl:flex-row items-center gap-12">
+            
+            <!-- Background Accent -->
+            <div class="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none transform translate-x-1/4 -translate-y-1/4">
+                <i class="fas fa-gamepad text-[400px]"></i>
+            </div>
+
+            <!-- Left Side: Text & Buttons -->
+            <div class="relative z-10 xl:w-[45%] w-full flex flex-col items-start">
+                <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Interactive Stream Game
+                </div>
+                <h2 class="text-5xl md:text-7xl lg:text-[5rem] font-black text-white mb-4 tracking-tight leading-[1.1]">Drop balls. <br><span class="text-emerald-500">Dominate the stream.</span></h2>
+                <p class="text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed mb-10">
+                    Tinko is a physics-based, fully interactive drop game that runs directly on your stream overlay. Viewers earn currency passively, drop balls, battle each other, and trigger epic on-screen alerts—completely controlling the action.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://play.tinko.online/" target="_blank"><button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all border border-emerald-500/50 flex items-center gap-2">
+                        <i class="fas fa-play"></i> Get Started
+                    </button></a>
+                    <!-- Matched the screenshot's second button style -->
+                    <button onclick="window.switchTab('setup')" class="bg-[#27272a] hover:bg-[#3f3f46] text-white font-bold px-8 py-4 rounded-xl transition-all border border-zinc-700 flex items-center gap-2 shadow-lg">
+                        <i class="fas fa-wrench text-blue-400"></i> Setup Guide
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Side: Live Mini Game Board -->
+            <div class="relative z-10 xl:w-[55%] w-full h-[350px] md:h-[500px] flex items-center justify-center pointer-events-none" id="hero-sim-container">
+                <!-- Canvas injected here by Matter.js -->
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mt-12 mb-2 flex items-center gap-3"><i class="fas fa-bolt text-amber-500"></i> Standout Features</h3>
+        <p class="text-zinc-500 mb-6">Everything you need to turn lurkers into active participants.</p>
+
+        <!-- Feature Grid (Unchanged) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group hover:border-emerald-500/50 transition-colors xl:col-span-2">
+                <div class="w-14 h-14 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-swords text-2xl text-emerald-500"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-3">Duels & Battle Royales</h4>
+                <p class="text-zinc-400 leading-relaxed text-sm">Viewers can challenge each other to high-stakes 1v1 duels, or moderators can open massive Battle Royale lobbies where the winner takes the entire pot.</p>
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group hover:border-blue-500/50 transition-colors xl:col-span-2">
+                <div class="w-14 h-14 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-image text-2xl text-blue-500"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-3">Custom Avatars & Balls</h4>
+                <p class="text-zinc-400 leading-relaxed text-sm">Let viewers express themselves! They can drop balls that look like their profile picture, specific hex colors, Twitch emotes, or custom uploaded server assets.</p>
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group hover:border-purple-500/50 transition-colors xl:col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="w-14 h-14 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-robot text-2xl text-purple-500"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-3">Integrated Bot</h4>
+                <p class="text-zinc-400 leading-relaxed text-sm">Tinko natively reads chat and replies to your viewers with their balances, leaderboard ranks, and duel invitations.</p>
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group hover:border-pink-500/50 transition-colors xl:col-span-2 md:col-span-1">
+                <div class="w-14 h-14 bg-pink-500/10 border border-pink-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-heart text-2xl text-pink-500"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-3">TikTok-Style Win Alerts</h4>
+                <p class="text-zinc-400 leading-relaxed text-sm">When a viewer hits a high multiplier, massive animated alerts and sound effects trigger on-stream, giving them the ultimate dopamine rush.</p>
+            </div>
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden group hover:border-amber-500/50 transition-colors xl:col-span-3 md:col-span-1 lg:col-span-2">
+                <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-globe text-2xl text-amber-500"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-3">Cross-Platform Support</h4>
+                <p class="text-zinc-400 leading-relaxed text-sm">Whether you stream on Twitch, Kick, or YouTube, Tinko pools all chats together. A viewer on Kick can duel a viewer on Twitch in real-time, seamlessly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Matter.js Script for the Live Hero Board -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+<script>
+    (function() {
+        // Cleanup routine in case the user navigates away and back to home
+        if (window.heroAutoDropInterval) clearInterval(window.heroAutoDropInterval);
+        if (window.heroSimEngine) Matter.Engine.clear(window.heroSimEngine);
+        if (window.heroSimRender) {
+            Matter.Render.stop(window.heroSimRender);
+            if (window.heroSimRender.canvas) window.heroSimRender.canvas.remove();
+        }
+        if (window.heroSimRunner) Matter.Runner.stop(window.heroSimRunner);
+
+        setTimeout(() => {
+            if (typeof Matter === 'undefined') return;
+
+            const container = document.getElementById('hero-sim-container');
+            if (!container) return;
+
+            const { Engine, Render, Runner, Bodies, Composite, Events, Body } = Matter;
+            
+            const engine = Engine.create(); 
+            const world = engine.world;
+            window.heroSimEngine = engine;
+
+            const width = 800; 
+            const height = 800; 
+            
+            const render = Render.create({ 
+                element: container, 
+                engine: engine, 
+                options: { width: width, height: height, wireframes: false, background: 'transparent' }
+            });
+            window.heroSimRender = render;
+
+            const runner = Runner.create();
+            window.heroSimRunner = runner;
+            Runner.run(runner, engine);
+            Render.run(render); 
+
+            // Physics Config
+            engine.world.gravity.y = 0.6; 
+            let currentAirFriction = 0.04; 
+            let currentSpread = 35;
+            let pegs = []; 
+            let balls = [];
+
+            const rows = 15; const startCols = 3; const spacingX = 46; const spacingY = 38; const startY = 100; let bottomRowWidth = 0;
+
+            // Generate Pegs
+            for (let row = 0; row < rows; row++) {
+                let pegsInThisRow = startCols + row; 
+                let rowWidth = (pegsInThisRow - 1) * spacingX; 
+                if (row === rows - 1) bottomRowWidth = rowWidth; 
+                let startX = (width / 2) - (rowWidth / 2);
+                for (let col = 0; col < pegsInThisRow; col++) {
+                    pegs.push(Bodies.circle(startX + (col * spacingX), startY + (row * spacingY), 4, { 
+                        isStatic: true, label: 'peg', restitution: 0.65, render: { fillStyle: '#9dc3f7' } 
+                    }));
+                }
+            }
+            Composite.add(world, pegs);
+
+            // Generate Walls
+            const wallMargin = (width - bottomRowWidth) / 2 - 15; 
+            Composite.add(world, [ 
+                Bodies.rectangle(wallMargin, height/2, 20, height, { isStatic: true, render: { visible: false } }), 
+                Bodies.rectangle(width - wallMargin, height/2, 20, height, { isStatic: true, render: { visible: false } }) 
+            ]);
+
+            // Generate Bins & Sensors
+            const bottomRowCols = startCols + rows - 1; 
+            const binStartX = (width / 2) - (bottomRowWidth / 2);
+            const binValues = [50, 20, 10, 5, 2, 1, 0, -1, -2, -1, 0, 1, 2, 5, 10, 20, 50];
+            const binColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#0ea5e9', '#94a3b8', '#f87171', '#b91c1c', '#f87171', '#94a3b8', '#0ea5e9', '#14b8a6', '#22c55e', '#eab308', '#f97316', '#ef4444'];
+            
+            for (let i = 0; i < bottomRowCols; i++) { 
+                const x = binStartX + (i * spacingX); 
+                const dividerX = x - (spacingX / 2);
+                Composite.add(world, Bodies.rectangle(dividerX, height - 60, 4, 120, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+                Composite.add(world, Bodies.circle(dividerX, height - 120, 2, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+                Composite.add(world, Bodies.rectangle(x, height - 30, spacingX - 6, 40, { 
+                    isStatic: true, isSensor: true, label: 'sensor_' + i, 
+                    plugin: { payout: binValues[i], color: binColors[i] }, render: { visible: false } 
+                }));
+            }
+            
+            const lastDividerX = binStartX + ((bottomRowCols - 1) * spacingX) + (spacingX / 2);
+            Composite.add(world, Bodies.rectangle(lastDividerX, height - 60, 4, 120, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+            Composite.add(world, Bodies.circle(lastDividerX, height - 120, 2, { isStatic: true, render: { fillStyle: '#3f3f46' } }));
+
+            // Drop Function
+            function dropAutoBall() {
+                // IMPORTANT: Prevent balls from piling up indefinitely when tab is inactive/backgrounded
+                if (balls.length >= 20) return;
+
+                const randomX = (width / 2) + (Math.random() * currentSpread - (currentSpread/2));
+                const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7', '#ec4899']; 
+                const ballColor = colors[Math.floor(Math.random() * colors.length)]; 
+                
+                const ball = Bodies.circle(randomX, -20, 11, { 
+                    restitution: 0.65, friction: 0.001, frictionAir: currentAirFriction, density: 0.05, 
+                    collisionFilter: { group: -1 }, label: 'ball', 
+                    render: { visible: false, fillStyle: ballColor }, 
+                    plugin: { hasScored: false } 
+                });
+
+                Body.setVelocity(ball, { x: Math.random() * 1 - 0.5, y: 0 }); 
+                balls.push(ball); 
+                Composite.add(world, ball);
+            }
+
+            // Cleanup fallen balls
+            Events.on(engine, 'beforeUpdate', () => { 
+                for (let i = balls.length - 1; i >= 0; i--) { 
+                    if (balls[i].position.y > height + 50) { 
+                        Composite.remove(world, balls[i]); 
+                        balls.splice(i, 1); 
+                    } 
+                } 
+            });
+
+            // Visual Rendering (3D Balls & Bins)
+            Events.on(render, 'afterRender', () => {
+                const ctx = render.context;
+                
+                balls.forEach(ball => {
+                    const grad = ctx.createRadialGradient(ball.position.x - 3.3, ball.position.y - 3.3, 1.1, ball.position.x, ball.position.y, 11);
+                    grad.addColorStop(0, 'rgba(255,255,255,0.9)'); grad.addColorStop(1, ball.render.fillStyle); 
+                    ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(ball.position.x, ball.position.y, 11, 0, 2*Math.PI); ctx.fill();
+                });
+
+                ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.font = "bold 13px system-ui";
+                for (let i = 0; i < bottomRowCols; i++) {
+                    const x = binStartX + (i * spacingX); const y = height - 20;
+                    ctx.fillStyle = binColors[i]; ctx.globalAlpha = 0.2;
+                    ctx.beginPath(); 
+                    if (ctx.roundRect) ctx.roundRect(x - (spacingX/2) + 3, y - 12, spacingX - 6, 24, 4); 
+                    else ctx.rect(x - (spacingX/2) + 3, y - 12, spacingX - 6, 24); 
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0; 
+                    let displayTxt = binValues[i] > 0 ? '+' + binValues[i] : binValues[i];
+                    ctx.fillText(displayTxt, x, y);
+                }
+            });
+
+            // Scoring Floating Text
+            Events.on(engine, 'collisionStart', function(event) {
+                event.pairs.forEach(pair => {
+                    let ball = null; let sensor = null;
+                    if (pair.bodyA.label === 'ball' && pair.bodyB.label.startsWith('sensor')) { ball = pair.bodyA; sensor = pair.bodyB; } 
+                    else if (pair.bodyB.label === 'ball' && pair.bodyA.label.startsWith('sensor')) { ball = pair.bodyB; sensor = pair.bodyA; }
+                    
+                    if (ball && sensor && !ball.plugin.hasScored) {
+                        ball.plugin.hasScored = true; 
+                        const el = document.createElement('div');
+                        el.style.position = 'absolute';
+                        el.style.left = `calc(50% + ${ball.position.x - (width/2)}px)`;
+                        el.style.top = `calc(50% + ${(height/2) - 60}px)`;
+                        el.style.color = sensor.plugin.color;
+                        el.style.fontWeight = '900'; el.style.fontSize = '1.5rem';
+                        el.style.textShadow = '0 0 10px rgba(0,0,0,0.8)';
+                        el.style.pointerEvents = 'none'; el.style.zIndex = '50';
+                        el.style.transform = 'translate(-50%, 0)';
+                        el.style.animation = 'floatUp 1.5s ease-out forwards';
+                        el.innerText = sensor.plugin.payout > 0 ? '+' + sensor.plugin.payout : sensor.plugin.payout;
+                        container.appendChild(el);
+                        setTimeout(() => el.remove(), 1500);
+                    }
+                });
+            });
+
+            // Make the canvas responsive
+            render.canvas.style.width = '100%';
+            render.canvas.style.height = '100%';
+            render.canvas.style.objectFit = 'contain';
+            render.canvas.style.filter = 'drop-shadow(0px 8px 10px rgba(0,0,0,0.9))';
+
+            // Auto-drop balls every 1.5 seconds
+            window.heroAutoDropInterval = setInterval(() => {
+                // Drop 1 to 3 balls randomly
+                const count = Math.floor(Math.random() * 3) + 1;
+                for(let i=0; i<count; i++) dropAutoBall();
+            }, 1500);
+
+            // Initial drops to populate board
+            setTimeout(dropAutoBall, 200);
+            setTimeout(dropAutoBall, 800);
+            setTimeout(dropAutoBall, 1200);
+
+        }, 300);
+    })();
+</script>
